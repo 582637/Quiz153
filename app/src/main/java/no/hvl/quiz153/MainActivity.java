@@ -2,6 +2,7 @@ package no.hvl.quiz153;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,19 +10,20 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    Button btn;;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        Button buttonEasy = (Button) findViewById(R.id.button_easy);
-        buttonEasy.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              Log.d("tag", "AAAAAAAAA");
-                                          }
-                                      }
+    }
 
-        );
+    public void act2(){
+        Intent intent = new Intent(this, DatabaseActivity.class).putExtra("name","HELLO");
+        startActivity(intent);
     }
 }

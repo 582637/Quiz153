@@ -7,45 +7,43 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import no.hvl.quiz153.databinding.ActivityDatabaseBinding;
 
 public class DatabaseActivity extends AppCompatActivity {
+    ArrayList<String> names = new ArrayList<>();
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityDatabaseBinding binding;
+    ListView listView;
+
+    Button button_sort;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityDatabaseBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.toolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_database);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_database);
+        listView = (ListView) findViewById(R.id.my_list);
+        names.add("Iver");
+        names.add("ASELIN");
+        CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(),names);
+        listView.setAdapter(customAdaptr);
+        Button button_sort = (Button) findViewById(R.id.button_sort);
+        button_sort.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                Collections.sort(names);
+                listView.setAdapter(new CustomAdaptr(getApplicationContext(),names));
             }
         });
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_database);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
     }
 }
